@@ -283,15 +283,15 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* STAFFFLOW CTA */}
+      {/* NSBTEK CTA */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="bg-gradient-to-br from-blue-600/20 to-violet-600/10 border border-blue-500/20 rounded-3xl p-12 text-center">
             <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/20 rounded-full px-4 py-1.5 mb-6">
               <BarChart2 className="w-3.5 h-3.5 text-blue-400" />
-              <span className="text-xs text-blue-300 font-medium uppercase tracking-wider">NSBTek StaffFlow Platform</span>
+              <span className="text-xs text-blue-300 font-medium uppercase tracking-wider">NSBTek Platform</span>
             </div>
-            <h2 className="text-4xl font-extrabold text-white mb-4">Manage Your Workforce with StaffFlow</h2>
+            <h2 className="text-4xl font-extrabold text-white mb-4">Manage Your Workforce with NSBTEK</h2>
             <p className="text-white/60 mb-8 max-w-2xl mx-auto">Our AI-powered staffing platform for ATS, CRM, and Workforce management — built specifically for staffing agencies and enterprises.</p>
             <div className="flex flex-wrap justify-center gap-4">
               <button onClick={() => { window.location.href = '/ATS/dashboard'; }} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-xl text-sm font-semibold transition-colors">
@@ -311,13 +311,13 @@ export default function Landing() {
               <h2 className="text-4xl font-extrabold text-white mb-4">We're just a message away from smarter solutions</h2>
               <p className="text-white/50 mb-8 text-sm">Reach out for a consultation, partnership, or to learn more about our AI solutions.</p>
               <div className="space-y-4">
-                <a href="mailto:info@nsbtek.com" className="flex items-center gap-3 text-white/70 hover:text-white transition-colors">
+                <a href="mailto:hr@nsbtek.com" className="flex items-center gap-3 text-white/70 hover:text-white transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0">
                     <Mail className="w-4 h-4 text-blue-400" />
                   </div>
                   <div>
                     <p className="text-xs text-white/40">Email</p>
-                    <p className="text-sm font-medium">info@nsbtek.com</p>
+                    <p className="text-sm font-medium">hr@nsbtek.com</p>
                   </div>
                 </a>
                 <a href="tel:+918466022022" className="flex items-center gap-3 text-white/70 hover:text-white transition-colors">
@@ -326,10 +326,10 @@ export default function Landing() {
                   </div>
                   <div>
                     <p className="text-xs text-white/40">Phone</p>
-                    <p className="text-sm font-medium">+91 846-602-2022 / +91 727-890-9090</p>
+                    <p className="text-sm font-medium">+1 612-567-0908 / +91 970-437-3976</p>
                   </div>
                 </a>
-                <a href="https://in.linkedin.com/company/blue-cloud-softech-solutions" target="_blank" rel="noreferrer"
+                <a href="https://in.linkedin.com/company/NSBTEK" target="_blank" rel="noreferrer"
                   className="flex items-center gap-3 text-white/70 hover:text-white transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0">
                     <Linkedin className="w-4 h-4 text-blue-400" />

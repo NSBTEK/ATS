@@ -6,10 +6,10 @@ export default function Contact() {
         Get in touch with our consulting team for tailored business solutions.
       </p>
       <a
-        href="mailto:info@nsbtek.com"
+        href="mailto:hr@nsbtek.com"
         className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-blue-600"
       >
-        info@nsbtek.com
+        hr@nsbtek.com
       </a>
     </div>
   );

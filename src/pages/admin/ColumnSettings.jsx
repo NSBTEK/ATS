@@ -139,58 +139,123 @@ const ALL_MODULES = SECTIONS.flatMap(s => s.modules);
 function ColumnEditor({ module, config, onChange }) {
   const cols = config || module.defaultColumns;
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) return;
+  const [dragIndex, setDragIndex] = React.useState(null);
+
+  const handleDragStart = (index) => {
+    setDragIndex(index);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault(); // required to allow drop
+  };
+
+  const handleDrop = (index) => {
+    if (dragIndex === null || dragIndex === index) return;
+
     const newCols = [...cols];
-    const [moved] = newCols.splice(result.source.index, 1);
-    newCols.splice(result.destination.index, 0, moved);
+    const [moved] = newCols.splice(dragIndex, 1);
+    newCols.splice(index, 0, moved);
+
+    setDragIndex(null);
     onChange(newCols);
   };
 
-  const toggle = (i) => onChange(cols.map((c, idx) => idx === i ? { ...c, visible: !c.visible } : c));
-  const rename = (i, label) => onChange(cols.map((c, idx) => idx === i ? { ...c, label } : c));
-  const remove = (i) => onChange(cols.filter((_, idx) => idx !== i));
-  const addColumn = () => onChange([...cols, { key: `custom_${Date.now()}`, label: 'New Column', visible: true, custom: true }]);
+  const toggle = (i) =>
+    onChange(cols.map((c, idx) => (idx === i ? { ...c, visible: !c.visible } : c)));
+
+  const rename = (i, label) =>
+    onChange(cols.map((c, idx) => (idx === i ? { ...c, label } : c)));
+
+  const remove = (i) =>
+    onChange(cols.filter((_, idx) => idx !== i));
+
+  const addColumn = () =>
+    onChange([
+      ...cols,
+      {
+        key: `custom_${Date.now()}`,
+        label: "New Column",
+        visible: true,
+        custom: true,
+      },
+    ]);
 
   return (
     <div className="space-y-2">
-      <div>
-        <div>
-            <div className="space-y-1.5">
-              {cols.map((col, i) => (
-                <div>
-                    <div
-                      className={cn(
-                        "flex items-center gap-2 px-3 py-2 rounded-lg border bg-background transition-all",
-                        false && "shadow-lg ring-1 ring-primary/30",
-                        !col.visible && "opacity-50"
-                      )}
-                    >
-                      <div className="cursor-grab text-muted-foreground">
-                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg>
-                      </div>
-                      <Input
-                        value={col.label}
-                        onChange={e => rename(i, e.target.value)}
-                        className="h-7 text-sm flex-1 border-0 bg-transparent p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                      />
-                      <span className="text-[10px] text-muted-foreground/40 font-mono hidden sm:block">{col.key}</span>
-                      <button onClick={() => toggle(i)} className={cn("p-1 rounded", col.visible ? "text-primary" : "text-muted-foreground/40")}>
-                        {col.visible ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
-                      </button>
-                      {col.custom && (
-                        <button onClick={() => remove(i)} className="p-1 rounded text-destructive/60 hover:text-destructive">
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-              ))}
-              {provided.placeholder}
+      <div className="space-y-1.5">
+        {cols.map((col, i) => (
+          <div
+            key={col.key}
+            draggable
+            onDragStart={() => handleDragStart(i)}
+            onDragOver={handleDragOver}
+            onDrop={() => handleDrop(i)}
+            className={cn(
+              "flex items-center gap-2 px-3 py-2 rounded-lg border bg-background transition-all",
+              dragIndex === i && "opacity-30",
+              !col.visible && "opacity-50"
+            )}
+          >
+            {/* Drag Handle */}
+            <div className="cursor-grab text-muted-foreground">
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="9" cy="5" r="1" />
+                <circle cx="9" cy="12" r="1" />
+                <circle cx="9" cy="19" r="1" />
+                <circle cx="15" cy="5" r="1" />
+                <circle cx="15" cy="12" r="1" />
+                <circle cx="15" cy="19" r="1" />
+              </svg>
             </div>
+
+            <Input
+              value={col.label}
+              onChange={(e) => rename(i, e.target.value)}
+              className="h-7 text-sm flex-1 border-0 bg-transparent p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            />
+
+            <span className="text-[10px] text-muted-foreground/40 font-mono hidden sm:block">
+              {col.key}
+            </span>
+
+            <button
+              onClick={() => toggle(i)}
+              className={cn(
+                "p-1 rounded",
+                col.visible ? "text-primary" : "text-muted-foreground/40"
+              )}
+            >
+              {col.visible ? (
+                <Eye className="w-3.5 h-3.5" />
+              ) : (
+                <EyeOff className="w-3.5 h-3.5" />
+              )}
+            </button>
+
+            {col.custom && (
+              <button
+                onClick={() => remove(i)}
+                className="p-1 rounded text-destructive/60 hover:text-destructive"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
+        ))}
       </div>
-      <Button variant="outline" size="sm" onClick={addColumn} className="gap-1.5 text-xs">
+
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={addColumn}
+        className="gap-1.5 text-xs"
+      >
         <Plus className="w-3.5 h-3.5" /> Add Column
       </Button>
     </div>

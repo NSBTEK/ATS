@@ -87,7 +87,7 @@ export default function Sidebar() {
         </div>
         {!collapsed && (
           <div>
-            <span className="font-extrabold text-sm tracking-tight text-white">StaffFlow</span>
+            <span className="font-extrabold text-sm tracking-tight text-white">NSBTEK StaffFlow</span>
             <p className="text-[9px] tracking-widest uppercase font-medium" style={{ color: 'hsl(238,60%,75%)' }}>Workforce Platform</p>
           </div>
         )}
